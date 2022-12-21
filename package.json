@@ -2,7 +2,7 @@
   "name": "futoshiki-game",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://gwpmad.github.io/futoshiki",
+  "homepage": "https://andy-duncan.github.io/futoshiki",
   "dependencies": {
     "gh-pages": "^2.2.0",
     "react": "^16.13.1",
