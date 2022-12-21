@@ -1,18 +1,10 @@
+import { BelowGame, Content, Grid, InputControls, Title } from 'components';
+import { getValueAtCoordinates, traverseGrid } from 'game-logic';
 import React, { useCallback, useEffect } from 'react';
 import useMousetrap from 'react-hook-mousetrap';
 import { useDispatch, useSelector } from 'react-redux';
-
-import { Content, Grid, BelowGame, Title, InputControls } from 'components';
+import { createGrid, deselectBlock, editBlockNotes, selectBlock, setBlockValue, toggleNotesMode } from 'reducers';
 import Container from './container';
-import { getValueAtCoordinates, traverseGrid } from 'game-logic';
-import {
-  createGrid,
-  deselectBlock,
-  editBlockNotes,
-  selectBlock,
-  setBlockValue,
-  toggleNotesMode
-} from 'reducers';
 
 const AppContainer = () => {
   const selectedBlock = useSelector(({ selectedBlock }) => selectedBlock);
@@ -60,32 +52,39 @@ const AppContainer = () => {
     if (canSetBlockValue) return dispatch(setBlockValue(number));
     if (canEditBlockNotes) return dispatch(editBlockNotes(number));
   }, [canSetBlockValue, canEditBlockNotes, dispatch]);
-  useMousetrap('1', () => handleNumberInput(1));
-  useMousetrap('2', () => handleNumberInput(2));
-  useMousetrap('3', () => handleNumberInput(3));
-  useMousetrap('4', () => handleNumberInput(4));
-  useMousetrap('5', () => handleNumberInput(5));
+  useMousetrap(['1', 'shift+1'], () => handleNumberInput(1));
+  useMousetrap(['2', 'shift+2'], () => handleNumberInput(2));
+  useMousetrap(['3', 'shift+3'], () => handleNumberInput(3));
+  useMousetrap(['4', 'shift+4'], () => handleNumberInput(4));
+  useMousetrap(['5', 'shift+5'], () => handleNumberInput(5));
 
   const handleDeletePress = useCallback(() => {
     if (canSetBlockValue) dispatch(setBlockValue(null));
-  }, [canSetBlockValue, dispatch]);;
+  }, [canSetBlockValue, dispatch]);
 
   useMousetrap('backspace', handleDeletePress);
   useMousetrap('del', handleDeletePress);
 
-  useMousetrap('shift', () => dispatch(toggleNotesMode()));
+  useEffect(() => {
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Shift') dispatch(toggleNotesMode())
+    }, true);
+    document.addEventListener('keyup', (e) => {
+      if (e.key === 'Shift') dispatch(toggleNotesMode())
+    }, true);
+  }, [dispatch]);
 
   const gameCompleted = useSelector(({ gameCompleted }) => gameCompleted);
   const title = gameCompleted ? 'Correct!' : 'Futoshiki';
 
   return (
     <Container
-      className="app-container"
+      className='app-container'
       gameCompleted={gameCompleted}
       onClick={dispatchDeselectBlock}
     >
-      <Content className="content">
-        <Title className="title">{title}</Title>
+      <Content className='content'>
+        <Title className='title'>{title}</Title>
         <Grid />
         <BelowGame />
         <InputControls handleNumberInput={handleNumberInput} handleDeletePress={handleDeletePress} />

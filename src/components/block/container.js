@@ -7,7 +7,7 @@ const Container = styled.div`
 
     return css`
       align-items: center;
-      background-color: ${colors.white};
+      background-color: ${isActive ? colors.lightPink : colors.white};
       border: solid 3px ${isActive ? colors.transparent : colors.lightBlack};
       color: ${color};
       cursor: pointer;

@@ -5,6 +5,7 @@ export default {
     darkBrown: '#483e3e',
     faintLimeGreen: '#0ddb588c',
     grey: '#4b6b7e',
+    lightPink: '#ffdddd',
     lightBlack: '#323232',
     lightBlue: '#dcffffde',
     lightTurquoise: '#8dd0e5',

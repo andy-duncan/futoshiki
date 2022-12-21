@@ -1,10 +1,10 @@
 import React, { Children, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { checkSolution, selectBlock } from 'reducers';
 
 import Chevron from './chevron';
 import Container from './container';
 import Notes from './notes';
-import { checkSolution, selectBlock } from 'reducers';
 
 const Block = ({ rowIndex, colIndex }) => {
   const greaterThan = useSelector(({ gameGrid }) =>
@@ -29,9 +29,7 @@ const Block = ({ rowIndex, colIndex }) => {
     if (!gameGrid || containsValueClue) return null;
     return gameGrid[rowIndex][colIndex].notes;
   });
-  const showNotes = useSelector(({ notesMode }) =>
-    !blockValue && notes ? notesMode : false
-  );
+  const showNotes = !blockValue;
 
   const dispatch = useDispatch();
   const handleClick = useCallback(
