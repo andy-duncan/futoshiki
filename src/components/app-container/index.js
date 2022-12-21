@@ -75,7 +75,7 @@ const AppContainer = () => {
   }, [dispatch]);
 
   const gameCompleted = useSelector(({ gameCompleted }) => gameCompleted);
-  const title = gameCompleted ? 'Correct!' : 'Futoshiki';
+  const title = gameCompleted ? 'Correct!!' : 'Futoshiki';
 
   return (
     <Container
