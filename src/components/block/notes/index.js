@@ -11,7 +11,7 @@ const Notes = ({ notes }) => {
       {Children.toArray(
         [...new Array(SIDE_LENGTH)].map((_, idx) => {
           const number = idx + 1;
-          const isActive = notes.includes(number);
+          const isActive = notes && notes.includes(number);
           return <Note isActive={isActive}>{number}</Note>;
         })
       )}
