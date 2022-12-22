@@ -22,7 +22,7 @@
     "redux-devtools-extension": "^2.13.8"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "react-scripts --openssl-legacy-provider start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "citest": "CI=true npm test",
