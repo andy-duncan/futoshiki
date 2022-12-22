@@ -18,11 +18,11 @@
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "husky": "^4.2.5",
-    "react-scripts": "3.4.1",
+    "react-scripts": "^5.0.1",
     "redux-devtools-extension": "^2.13.8"
   },
   "scripts": {
-    "start": "react-scripts --openssl-legacy-provider start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "citest": "CI=true npm test",
