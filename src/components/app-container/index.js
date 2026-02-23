@@ -13,10 +13,10 @@ const AppContainer = () => {
     if (selectedBlock) dispatch(deselectBlock());
   }, [dispatch, selectedBlock]);
 
-  const noGameGrid = useSelector(({ gameGrid }) => !gameGrid);
+  const shouldCreateGrid = useSelector(({ gameGrid, gameCompleted }) => !gameGrid || gameCompleted);
   useEffect(() => {
-    if (noGameGrid) dispatch(createGrid());
-  }, [dispatch, noGameGrid]);
+    if (shouldCreateGrid) dispatch(createGrid());
+  }, [dispatch, shouldCreateGrid]);
 
   const [moveUp, moveDown, moveLeft, moveRight] = [
     'above',
@@ -33,10 +33,16 @@ const AppContainer = () => {
   useMousetrap('right', moveRight);
 
   useMousetrap('esc', () => dispatch(deselectBlock()));
+  useMousetrap('n', () => dispatch(createGrid()));
 
   const canSetBlockValue = useSelector(({ gameGrid, notesMode }) => {
     if (!gameGrid || !selectedBlock || notesMode) return false;
     return !getValueAtCoordinates(gameGrid, selectedBlock).value;
+  });
+
+  const selectedBlockEnteredValue = useSelector(({ gameGrid }) => {
+    if (!gameGrid || !selectedBlock) return null;
+    return getValueAtCoordinates(gameGrid, selectedBlock).enteredValue;
   });
 
   const canEditBlockNotes = useSelector(({ gameGrid, notesMode }) => {
@@ -49,9 +55,12 @@ const AppContainer = () => {
   });
 
   const handleNumberInput = useCallback(number => {
-    if (canSetBlockValue) return dispatch(setBlockValue(number));
+    if (canSetBlockValue) {
+      if (selectedBlockEnteredValue === number) return dispatch(setBlockValue(null));
+      return dispatch(setBlockValue(number));
+    }
     if (canEditBlockNotes) return dispatch(editBlockNotes(number));
-  }, [canSetBlockValue, canEditBlockNotes, dispatch]);
+  }, [canSetBlockValue, canEditBlockNotes, selectedBlockEnteredValue, dispatch]);
   useMousetrap(['1', 'shift+1'], () => handleNumberInput(1));
   useMousetrap(['2', 'shift+2'], () => handleNumberInput(2));
   useMousetrap(['3', 'shift+3'], () => handleNumberInput(3));
@@ -67,10 +76,10 @@ const AppContainer = () => {
 
   useEffect(() => {
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Shift') dispatch(toggleNotesMode())
+      if (e.key === 'Shift' || e.key === 'Control') dispatch(toggleNotesMode())
     }, true);
     document.addEventListener('keyup', (e) => {
-      if (e.key === 'Shift') dispatch(toggleNotesMode())
+      if (e.key === 'Shift' || e.key === 'Control') dispatch(toggleNotesMode())
     }, true);
   }, [dispatch]);
 

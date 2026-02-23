@@ -20,7 +20,7 @@ function reducer(state = initialState, action) {
         ...state,
         fullGrid,
         gameGrid,
-        selectedBlock: null,
+        selectedBlock: [0, 0],
         gameCompleted: false,
         notesMode: false
       };
