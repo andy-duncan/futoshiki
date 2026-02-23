@@ -7,9 +7,9 @@ const Container = styled.div`
 
     return css`
       align-items: center;
-      background-color: ${isActive ? '#eef5fc' : colors.white};
+      background-color: ${isActive ? '#b8d9f5' : colors.white};
       border: solid 3px ${isActive ? colors.midBlue : colors.lightBlack};
-      box-shadow: ${isActive ? '0 0 12px rgba(55, 137, 212, 0.45)' : 'none'};
+      box-shadow: ${isActive ? '0 0 16px rgba(55, 137, 212, 0.7)' : 'none'};
       color: ${color};
       cursor: pointer;
       display: flex;
@@ -30,7 +30,7 @@ const Container = styled.div`
       }
 
       &:hover {
-        background-color: ${isActive ? '#eef5fc' : colors.lightBlue};
+        background-color: ${isActive ? '#b8d9f5' : colors.lightBlue};
       }
     `;
   }}
